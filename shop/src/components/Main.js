@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { data } from "../data";
 import "../App.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Main = () => {
-  let [shoes] = useState(data);
-
+const Main = ({ shoes }) => {
   return (
     <div className="App">
       <div className="main-bg"></div>
@@ -22,15 +19,33 @@ const Main = () => {
 };
 
 function ShoeComponent(props) {
+  let navigate = useNavigate();
+
+  function navi_detail() {
+    navigate("/detail");
+  }
+
   return (
     <div className="col-md-4">
-      <Link to="/detail">
-        <img src={props.shoes.img_src} width="80%" alt="shoe_mg" />
-      </Link>
+      <img
+        src={props.shoes.img_src}
+        width="80%"
+        alt="shoe_mg"
+        onClick={() => {
+          navi_detail();
+        }}
+      />
+
       {/* public폴더 이미지 쓰는 권장방식 / src ={process.env.PUBLIC_URL + "/logo.png"}*/}
-      <Link to="/detail">
-        <h4>{props.shoes.title}</h4>
-      </Link>
+
+      <h4
+        onClick={() => {
+          navi_detail();
+        }}
+      >
+        {props.shoes.title}
+      </h4>
+
       <p>{props.shoes.content}</p>
       <p>{props.shoes.price}</p>
     </div>
