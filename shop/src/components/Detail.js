@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 // import styled from "styled-components";
 
@@ -15,9 +16,29 @@ const Detail = (props) => {
   let pick_shoe = props.shoes.find(function (x) {
     return x.id == id;
   });
+
+  let [alert, setAlert] = useState(true);
+
+  //component mount, update 시 코드 실행 : html 렌더링 후에 동작한다.
+  //어려운 연산, 서버에서 데이터 가져오는 작업, 타이머 장착 등
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setAlert(false);
+    }, 2000);
+
+    return () => {
+      //타이머 제거 함수
+      clearTimeout(timer);
+    };
+  }, []);
+  //[] : useEffect의 실행조건
+
   return (
     <div className="container">
       {/* <YellowBtn bg="blue">버튼</YellowBtn> */}
+      {alert == true ? (
+        <div className="alert alert-warning">2초이내 구매 시 할인</div>
+      ) : null}
       <div className="row">
         <div className="col-md-6">
           <img src={pick_shoe.img_src} width="100%" />

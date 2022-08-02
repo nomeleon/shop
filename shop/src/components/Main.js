@@ -21,7 +21,7 @@ const Main = ({ shoes }) => {
 function ShoeComponent(props) {
   let navigate = useNavigate();
   let id = props.shoes.id;
-  console.log(id);
+
   return (
     <div className="col-md-4">
       <img
