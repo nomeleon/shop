@@ -20,11 +20,8 @@ const Main = ({ shoes }) => {
 
 function ShoeComponent(props) {
   let navigate = useNavigate();
-
-  function navi_detail() {
-    navigate("/detail");
-  }
-
+  let id = props.shoes.id;
+  console.log(id);
   return (
     <div className="col-md-4">
       <img
@@ -32,7 +29,7 @@ function ShoeComponent(props) {
         width="80%"
         alt="shoe_mg"
         onClick={() => {
-          navi_detail();
+          navigate("/detail/" + id);
         }}
       />
 
@@ -40,7 +37,7 @@ function ShoeComponent(props) {
 
       <h4
         onClick={() => {
-          navi_detail();
+          navigate("/detail/" + id);
         }}
       >
         {props.shoes.title}

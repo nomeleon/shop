@@ -1,5 +1,14 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
+// import styled from "styled-components";
+
+// let YellowBtn = styled.button`
+//   background: ${(props) => props.bg};
+//   color: black;
+//   padding: 10px;
+// `;
+
+// // 기존 스타일 복사 기능
+// styled.button(YellowBtn);
 
 const Detail = (props) => {
   let { id } = useParams();
@@ -8,6 +17,7 @@ const Detail = (props) => {
   });
   return (
     <div className="container">
+      {/* <YellowBtn bg="blue">버튼</YellowBtn> */}
       <div className="row">
         <div className="col-md-6">
           <img src={pick_shoe.img_src} width="100%" />
