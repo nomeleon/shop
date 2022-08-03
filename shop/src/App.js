@@ -4,11 +4,17 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import Main from "./components/Main";
 import Detail from "./components/Detail";
 import { data } from "./data/data";
-import { useState } from "react";
+import { createContext, useState } from "react";
+
+//context api
+//props 거치지 않고 변수 전달
+// 컴포넌트 재활용 어렵고 성능 이슈로 잘 사용하지는 않음
+export let Context1 = createContext();
 
 function App() {
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
+  let [amount] = useState([10, 11, 12]);
 
   return (
     <div className="App">
@@ -32,7 +38,14 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Main shoes={shoes} />} />
-        <Route path="/detail/:id" element={<Detail shoes={shoes} />} />
+        <Route
+          path="/detail/:id"
+          element={
+            // <Context1.Provider value={{ amount }}>
+            <Detail shoes={shoes} />
+            // </Context1.Provider>
+          }
+        />
 
         {/* nested routes
         <Route path="/about" element={<About />}>

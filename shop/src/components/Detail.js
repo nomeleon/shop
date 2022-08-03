@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 // import styled from "styled-components";
+import { Context1 } from "../App";
 
 // let YellowBtn = styled.button`
 //   background: ${(props) => props.bg};
@@ -12,14 +13,17 @@ import { useParams } from "react-router-dom";
 // // 기존 스타일 복사 기능
 // styled.button(YellowBtn);
 
-const Detail = (props) => {
+const Detail = ({ shoes }) => {
   let { id } = useParams();
-  let pick_shoe = props.shoes.find(function (x) {
+  let pick_shoe = shoes.find(function (x) {
     return x.id == id;
   });
 
   let [alert, setAlert] = useState(true);
   let [tab, setTab] = useState(0);
+
+  //context api 사용하는법
+  // let { amount } = useContext(Context1);
 
   //component mount, update 시 코드 실행 : html 렌더링 후에 동작한다.
   //어려운 연산, 서버에서 데이터 가져오는 작업, 타이머 장착 등
@@ -85,12 +89,12 @@ const Detail = (props) => {
           </Nav.Link>
         </Nav.Item>
       </Nav>
-      <TabContent tab={tab} />
+      <TabContent tab={tab} shoe={shoes} />
     </div>
   );
 };
 
-function TabContent({ tab }) {
+function TabContent({ tab, shoe }) {
   // if (tab == 0) {
   //   return <div>내용0</div>;
   // } else if (tab == 1) {
@@ -112,7 +116,7 @@ function TabContent({ tab }) {
 
   return (
     <div className={"start " + fade}>
-      {[<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][tab]}
+      {[<div>{shoe[0].title}</div>, <div>내용1</div>, <div>내용2</div>][tab]}
     </div>
   );
 }
