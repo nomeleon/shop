@@ -1,31 +1,65 @@
 import { useState } from "react";
 import "../App.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Main = ({ shoes }) => {
+  const [mainShoes, setShoes] = useState(shoes);
+
   return (
-    <div className="App">
+    <>
       <div className="main-bg"></div>
 
       <div className="container">
         <div className="row">
-          {shoes.map((shoe, i) => {
-            return <ShoeComponent shoes={shoes[i]} key={i}></ShoeComponent>;
+          {mainShoes.map((shoe, i) => {
+            return (
+              <ShoeComponent mainShoes={mainShoes[i]} key={i}></ShoeComponent>
+            );
           })}
         </div>
       </div>
-    </div>
+      <button
+        onClick={() => {
+          axios
+            .get("https://codingapple1.github.io/shop/data2.json")
+            .then((result) => {
+              //데이터 가져온 후 처리
+              let copy = [...mainShoes, ...result.data];
+              setShoes(copy);
+            })
+            .catch(() => {
+              //예외처리
+              console.log("error");
+            });
+        }}
+      >
+        버튼
+      </button>
+    </>
   );
 };
 
+// //서버로 post 전송 예시
+// axios.post('url', {name:'kim'})
+
+// //동시에 ajax 여러개 요청 : 해당 ajax 모두 성공 시 then
+// Promise.all([axios.get('/url1'), axios.get('/url2')])
+// .then(()=>{})
+
+// //기본 문법 ajax : json 데이터로 변환
+// fetch('utl')
+// .then(result => result.json())
+// .then(data => {})
+
 function ShoeComponent(props) {
   let navigate = useNavigate();
-  let id = props.shoes.id;
+  let id = props.mainShoes.id;
 
   return (
     <div className="col-md-4">
       <img
-        src={props.shoes.img_src}
+        src={props.mainShoes.img_src}
         width="80%"
         alt="shoe_mg"
         onClick={() => {
@@ -40,11 +74,11 @@ function ShoeComponent(props) {
           navigate("/detail/" + id);
         }}
       >
-        {props.shoes.title}
+        {props.mainShoes.title}
       </h4>
 
-      <p>{props.shoes.content}</p>
-      <p>{props.shoes.price}</p>
+      <p>{props.mainShoes.content}</p>
+      <p>{props.mainShoes.price}</p>
     </div>
   );
 }

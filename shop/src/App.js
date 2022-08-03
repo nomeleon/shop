@@ -7,7 +7,7 @@ import { data } from "./data/data";
 import { useState } from "react";
 
 function App() {
-  let [shoes] = useState(data);
+  let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
 
   return (
