@@ -5,6 +5,7 @@ import Main from "./components/Main";
 import Detail from "./components/Detail";
 import { data } from "./data/data";
 import { createContext, useState } from "react";
+import Cart from "./components/Cart";
 
 //context api
 //props 거치지 않고 변수 전달
@@ -31,7 +32,14 @@ function App() {
               Home
             </Nav.Link>
             <Nav.Link href="#features">Produncts</Nav.Link>
-            <Nav.Link href="#pricing">Cart</Nav.Link>
+            <Nav.Link
+              href="#pricing"
+              onClick={() => {
+                navigate("/cart");
+              }}
+            >
+              Cart
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
@@ -46,7 +54,7 @@ function App() {
             // </Context1.Provider>
           }
         />
-
+        <Route path="/cart" element={<Cart />} />
         {/* nested routes
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>member</div>} />
