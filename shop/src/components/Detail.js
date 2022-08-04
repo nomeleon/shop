@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 // import styled from "styled-components";
 import { Context1 } from "../App";
+import { addItem } from "../store";
 
 // let YellowBtn = styled.button`
 //   background: ${(props) => props.bg};
@@ -21,6 +23,7 @@ const Detail = ({ shoes }) => {
 
   let [alert, setAlert] = useState(true);
   let [tab, setTab] = useState(0);
+  let dispatch = useDispatch();
 
   //context api 사용하는법
   // let { amount } = useContext(Context1);
@@ -53,7 +56,20 @@ const Detail = ({ shoes }) => {
           <h4 className="pt-5">{pick_shoe.title}</h4>
           <p>{pick_shoe.price}</p>
           <p>{pick_shoe.content}</p>
-          <button className="btn btn-danger">주문하기</button>
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              dispatch(
+                addItem({
+                  id: pick_shoe.id,
+                  name: pick_shoe.title,
+                  count: 1,
+                })
+              );
+            }}
+          >
+            주문하기
+          </button>
         </div>
       </div>
 
