@@ -4,7 +4,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import Main from "./components/Main";
 import Detail from "./components/Detail";
 import { data } from "./data/data";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import Cart from "./components/Cart";
 
 //context api
@@ -13,6 +13,17 @@ import Cart from "./components/Cart";
 export let Context1 = createContext();
 
 function App() {
+  // let obj = { name: "kim" };
+  // //JSON.stringify : object -> json
+  // localStorage.setItem("data", JSON.stringify(obj));
+  // let a = localStorage.getItem("data");
+  // //JSON.parse : json -> object
+  // console.log(JSON.parse(a).name);
+
+  useEffect(() => {
+    localStorage.setItem("watched", JSON.stringify([]));
+  }, []);
+
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
   let [amount] = useState([10, 11, 12]);
