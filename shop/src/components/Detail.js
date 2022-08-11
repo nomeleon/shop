@@ -25,6 +25,15 @@ const Detail = ({ shoes }) => {
   let [tab, setTab] = useState(0);
   let dispatch = useDispatch();
 
+  useEffect(() => {
+    console.log(pick_shoe.id);
+    let watched_shoe = localStorage.getItem("watched");
+    watched_shoe = JSON.parse(watched_shoe);
+    watched_shoe.push(pick_shoe.id);
+    watched_shoe = new Set(watched_shoe);
+    watched_shoe = Array.from(watched_shoe);
+    localStorage.setItem("watched", JSON.stringify(watched_shoe));
+  }, []);
   //context api 사용하는법
   // let { amount } = useContext(Context1);
 

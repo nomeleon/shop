@@ -6,6 +6,8 @@ import Detail from "./components/Detail";
 import { data } from "./data/data";
 import { createContext, useEffect, useState } from "react";
 import Cart from "./components/Cart";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 //context api
 //props 거치지 않고 변수 전달
@@ -27,6 +29,13 @@ function App() {
   let [shoes, setShoes] = useState(data);
   let navigate = useNavigate();
   let [amount] = useState([10, 11, 12]);
+
+  let result = useQuery("작명", () =>
+    axios.get("https://codingapple1.github.io/userdata.json").then((a) => {
+      console.log(a);
+      return a.data;
+    })
+  );
 
   return (
     <div className="App">
@@ -51,6 +60,11 @@ function App() {
             >
               Cart
             </Nav.Link>
+          </Nav>
+          <Nav className="ms-auto">
+            {result.isLoading && "loading.."}
+            {result.error && "error.."}
+            {result.data && result.data.name}
           </Nav>
         </Container>
       </Navbar>
