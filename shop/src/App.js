@@ -2,9 +2,9 @@ import "./App.css";
 import { Routes, Route, Link, useNavigate, Outlet } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import Main from "./components/Main";
-import Detail from "./components/Detail";
+// import Detail from "./components/Detail";
 import { data } from "./data/data";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, lazy, Suspense } from "react";
 import Cart from "./components/Cart";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -13,6 +13,8 @@ import { useQuery } from "react-query";
 //props 거치지 않고 변수 전달
 // 컴포넌트 재활용 어렵고 성능 이슈로 잘 사용하지는 않음
 export let Context1 = createContext();
+
+const Detail = lazy(() => import("./components/Detail"));
 
 function App() {
   // let obj = { name: "kim" };
@@ -69,25 +71,27 @@ function App() {
         </Container>
       </Navbar>
 
-      <Routes>
-        <Route path="/" element={<Main shoes={shoes} />} />
-        <Route
-          path="/detail/:id"
-          element={
-            // <Context1.Provider value={{ amount }}>
-            <Detail shoes={shoes} />
-            // </Context1.Provider>
-          }
-        />
-        <Route path="/cart" element={<Cart />} />
-        {/* nested routes
+      <Suspense fallback={<div>로딩중임</div>}>
+        <Routes>
+          <Route path="/" element={<Main shoes={shoes} />} />
+          <Route
+            path="/detail/:id"
+            element={
+              // <Context1.Provider value={{ amount }}>
+              <Detail shoes={shoes} />
+              // </Context1.Provider>
+            }
+          />
+          <Route path="/cart" element={<Cart />} />
+          {/* nested routes
         <Route path="/about" element={<About />}>
           <Route path="member" element={<div>member</div>} />
           <Route path="location" element={<div>location</div>} />
         </Route> */}
 
-        <Route path="*" element={<div>404</div>} />
-      </Routes>
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
